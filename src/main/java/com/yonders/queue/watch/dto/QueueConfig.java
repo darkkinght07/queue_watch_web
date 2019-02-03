@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class QueueConfig {
     private String queueName;
+    private int number = 1;
 }

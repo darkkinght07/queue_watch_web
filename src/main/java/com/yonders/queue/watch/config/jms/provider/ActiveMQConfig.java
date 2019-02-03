@@ -1,7 +1,6 @@
 package com.yonders.queue.watch.config.jms.provider;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.qpid.jms.JmsConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,17 +27,13 @@ public class ActiveMQConfig {
     private String password;
 
     @Bean
-    public ActiveMQConnectionFactory connectionFactory() {
+    public Session session() throws JMSException {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
+        factory.setUseAsyncSend(true);
         factory.setBrokerURL(brokerURL);
 
-        return factory;
-    }
-
-    @Bean
-    public Session session() throws JMSException {
-        JmsConnectionFactory factory = new JmsConnectionFactory(connectionURI);
-        Connection connection = factory.createConnection("admin", "password");
+//        JmsConnectionFactory factory = new JmsConnectionFactory(connectionURI); // for amqp
+        Connection connection = factory.createConnection(username, password);
         connection.start();
 
         return connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
