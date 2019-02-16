@@ -1,6 +1,6 @@
 package com.yonders.queue.watch.service.activemq;
 
-import com.yonders.queue.watch.service.Consumer;
+import com.yonders.queue.watch.service.ConsumerService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import javax.jms.TextMessage;
 
 @Service
 @Log4j2
-public class ActiveMQConsumer extends Consumer {
+public class ActiveMQConsumerServiceImpl extends ConsumerService {
 
     @Autowired
     private ConnectionFactory factory;

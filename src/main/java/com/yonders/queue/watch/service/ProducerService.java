@@ -4,8 +4,8 @@ import com.yonders.queue.watch.dto.MessageQueueConfig;
 
 import javax.jms.JMSException;
 
-public interface Producer {
+public interface ProducerService {
 
-    void createMessages(MessageQueueConfig messageQueueConfig) throws JMSException;
+    String createMessages(MessageQueueConfig messageQueueConfig) throws JMSException;
 }
 

@@ -1,8 +1,10 @@
 package com.yonders.queue.watch.controller;
 
 import com.yonders.queue.watch.dto.MessageQueueConfig;
-import com.yonders.queue.watch.service.Consumer;
-import com.yonders.queue.watch.service.Producer;
+import com.yonders.queue.watch.dto.QueueStatistic;
+import com.yonders.queue.watch.service.ConsumerService;
+import com.yonders.queue.watch.service.ProducerService;
+import com.yonders.queue.watch.service.QueueStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,22 +20,25 @@ import javax.jms.JMSException;
 public class QueueController {
 
     @Autowired
-    private Producer producer;
+    private ProducerService producerService;
 
     @Autowired
-    private Consumer consumer;
+    private ConsumerService consumerService;
+
+    @Autowired
+    private QueueStatsService queueStatsService;
 
     @GetMapping("info")
-    public String getQueueInfo() {
-        return "queue is up";
+    public QueueStatistic info(@RequestParam("queueName") String queueName,
+                               @RequestParam("username") String username,
+                               @RequestParam("password") String password) {
+        return queueStatsService.getStatistics(queueName, username, password);
     }
 
     @PostMapping("send")
-    public String createQueue(@RequestBody MessageQueueConfig queueConfig) throws JMSException {
+    public String send(@RequestBody MessageQueueConfig queueConfig) throws JMSException {
 
-        producer.createMessages(queueConfig);
-
-        return "Messages sent";
+        return producerService.createMessages(queueConfig);
     }
 
     @GetMapping("receive")
@@ -41,8 +46,8 @@ public class QueueController {
                           @RequestParam("username") String username,
                           @RequestParam("password") String password) {
 
-        consumer.createConsumer(queueName, username, password);
+        consumerService.createConsumer(queueName, username, password);
 
-        return "Consumer created. Waiting for messages.";
+        return "ConsumerService created. Waiting for messages.";
     }
 }

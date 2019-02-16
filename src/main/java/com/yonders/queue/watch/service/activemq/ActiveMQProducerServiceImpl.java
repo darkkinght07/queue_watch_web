@@ -1,7 +1,7 @@
 package com.yonders.queue.watch.service.activemq;
 
 import com.yonders.queue.watch.dto.MessageQueueConfig;
-import com.yonders.queue.watch.service.Producer;
+import com.yonders.queue.watch.service.ProducerService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ import javax.jms.Session;
 
 @Service
 @Log4j2
-public class ActiveMQProducer implements Producer {
+public class ActiveMQProducerServiceImpl implements ProducerService {
 
     @Autowired
     private ConnectionFactory factory;
 
-    public void createMessages(MessageQueueConfig messageQueueConfig) throws JMSException {
+    public String createMessages(MessageQueueConfig messageQueueConfig) throws JMSException {
         Connection connection = factory.createConnection(
                 messageQueueConfig.getUsername(), messageQueueConfig.getPassword());
         connection.start();
@@ -38,7 +38,7 @@ public class ActiveMQProducer implements Producer {
 
         session.commit();
 
-        log.debug(String.format("Total sent %d messages", messageQueueConfig.getNumber()));
+        return String.format("Total sent %d messages", messageQueueConfig.getNumber());
     }
 
     private void createAndSend(MessageQueueConfig messageQueueConfig, Session session, MessageProducer producer)
