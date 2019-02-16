@@ -7,4 +7,7 @@ public class MessageQueueConfig {
     private String queueName;
     private String message;
     private int number = 1;
+
+    private String username;
+    private String password;
 }
