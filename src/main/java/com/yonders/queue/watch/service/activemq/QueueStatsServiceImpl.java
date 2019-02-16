@@ -67,6 +67,10 @@ public class QueueStatsServiceImpl implements QueueStatsService {
 
     private String getInfoMessage(int allMessagesSize, int textMessagesSize) {
 
+        if (allMessagesSize == 0) {
+            return "No messages in the queue.";
+        }
+
         if (allMessagesSize != textMessagesSize) {
             return textMessagesSize + " text messages displayed from " + allMessagesSize + ". Non-text messages are not displayed.";
         } else {

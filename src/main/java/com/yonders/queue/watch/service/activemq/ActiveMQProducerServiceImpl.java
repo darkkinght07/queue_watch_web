@@ -38,7 +38,7 @@ public class ActiveMQProducerServiceImpl implements ProducerService {
 
         session.commit();
 
-        return String.format("Total sent %d messages", messageQueueConfig.getNumber());
+        return String.format("Sent %d messages", messageQueueConfig.getNumber());
     }
 
     private void createAndSend(MessageQueueConfig messageQueueConfig, Session session, MessageProducer producer)

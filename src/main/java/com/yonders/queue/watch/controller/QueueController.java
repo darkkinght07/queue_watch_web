@@ -35,19 +35,19 @@ public class QueueController {
         return queueStatsService.getStatistics(queueName, username, password);
     }
 
-    @PostMapping("send")
+    @PostMapping("push")
     public String send(@RequestBody MessageQueueConfig queueConfig) throws JMSException {
 
         return producerService.createMessages(queueConfig);
     }
 
-    @GetMapping("receive")
+    @GetMapping("pull")
     public String receive(@RequestParam("queueName") String queueName,
                           @RequestParam("username") String username,
                           @RequestParam("password") String password) {
 
-        consumerService.createConsumer(queueName, username, password);
+        consumerService.consume(queueName, username, password);
 
-        return "ConsumerService created. Waiting for messages.";
+        return "Message consumption in progress.. Check queue/info for progress.";
     }
 }

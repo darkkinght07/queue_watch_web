@@ -21,7 +21,7 @@ public class ActiveMQConsumerServiceImpl extends ConsumerService {
     @Autowired
     private ConnectionFactory factory;
 
-    public void createConsumer(String queueName, String username, String password) {
+    public void consume(String queueName, String username, String password) {
         try {
             Connection connection = factory.createConnection(username, password);
             connection.start();
@@ -42,12 +42,14 @@ public class ActiveMQConsumerServiceImpl extends ConsumerService {
         try {
             process(message);
         } catch (JMSException ex) {
-            log.error("Error processing message in queue.");
+            log.error("Error processing queue message.");
         }
     }
 
     private void process(Message message) throws JMSException {
 
-        System.out.println(((TextMessage) message).getText());
+        if (message instanceof TextMessage) {
+            System.out.println(((TextMessage) message).getText());
+        }
     }
 }
