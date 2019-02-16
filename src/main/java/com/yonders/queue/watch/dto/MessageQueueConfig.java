@@ -3,7 +3,8 @@ package com.yonders.queue.watch.dto;
 import lombok.Data;
 
 @Data
-public class QueueConfig {
+public class MessageQueueConfig {
     private String queueName;
+    private String message;
     private int number = 1;
 }

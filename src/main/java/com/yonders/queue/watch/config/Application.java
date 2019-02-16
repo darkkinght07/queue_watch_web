@@ -7,7 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({
         "com.yonders.queue.watch.config",
-        "com.yonders.queue.watch.controller"
+        "com.yonders.queue.watch.controller",
+        "com.yonders.queue.watch.service"
 })
 public class Application {
 
